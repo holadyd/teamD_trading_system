@@ -83,7 +83,7 @@ def test_auto_trader_sell(mocker: MockerFixture):
 
     trader_app.sell('stock code', 3000, 5)
 
-    driver.buy.assert_has_calls([call('stock code', 3000, 5)])
+    driver.sell.assert_has_calls([call('stock code', 3000, 5)])
 
 def test_auto_trader_get_price(mocker: MockerFixture):
     driver = mocker.Mock(spec=Driver)
