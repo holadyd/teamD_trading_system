@@ -22,6 +22,8 @@ class TestBroker(ABC):
 
 
 
+
+
 @pytest.mark.skip
 def test_auto_trader_import():
     trader_app = AutoTradingSystem()
@@ -55,6 +57,20 @@ def test_auto_trader_buy(mocker: MockerFixture):
     trader_app.buy('stock code', 3000, 5)
 
     driver.buy.assert_has_calls([call('stock code', 3000, 5)])
+
+@pytest.mark.skip
+def test_auto_trader_buy_1_stock(mocker: MockerFixture):
+    trader_app = AutoTradingSystem()
+    trader_app.select_broker(TestBroker)
+    trader_app.driver.account.id = 'test_id'
+    trader_app.driver.account.money = 1000
+    trader_app.driver.account.stocks = []
+
+    trader_app.buy('1234', 50, 5)
+
+    assert trader_app.driver.account.money == 750
+    assert trader_app.driver.account.stocks[0].stock_code == '1234'
+    assert trader_app.driver.account.stocks[0].amount == 5
 
 
 
