@@ -2,9 +2,6 @@ import random
 from time import sleep
 
 class NemoAPI:
-    def __init__(self):
-        self.name = "nemo"
-
     def cerification(self, id, password):
         print('[NEMO]' + id + ' login GOOD')
 
