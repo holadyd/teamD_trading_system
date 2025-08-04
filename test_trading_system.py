@@ -135,15 +135,22 @@ def test_buy_and_print_kiwer(capsys):
     captured = capsys.readouterr()
     assert captured.out == "5678 : Buy stock ( 99 * 10\n"
 
+@pytest.mark.skip
 def test_sell_and_print_nemo(capsys):
-    ...
+    trader_app = AutoTradingSystem()
 
+    trader_app.select_stock_broker("nemo")
+    trader_app.sell('1234', 50, 5)
 
-def test_sell_and_print_kiwer(capsys):
-    ...
-
-def test_capsys(capsys):
-    print("hello")
     captured = capsys.readouterr()
-    assert captured.out == "hello\n"
+    assert captured.out == "[NEMO]1234 sell stock ( price : 50 ) * ( count : 5)\n"
 
+@pytest.mark.skip
+def test_sell_and_print_kiwer(capsys):
+    trader_app = AutoTradingSystem()
+
+    trader_app.select_stock_broker("kiwer")
+    trader_app.sell('5678', 99, 10)
+
+    captured = capsys.readouterr()
+    assert captured.out == "5678 : Sell stock ( 99 * 10\n"
