@@ -25,7 +25,7 @@ class AutoTradingSystem:
         pass
 
     def buy(self,code,price,count):
-        self.driver.buy(code,count,price)
+        self._driver.buy(code,count,price)
 
     def sell_nice_timing(self):
         '''
