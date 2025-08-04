@@ -4,6 +4,10 @@ from abc import ABC, abstractmethod
 from unittest.mock import call
 from AutoTradingSystem import *
 
+from AutoTradingSystem import AutoTradingSystem
+from kiwer_api import KiwerAPI
+from nemo_api import NemoAPI
+
 
 class TestBroker():
     def login(self):
@@ -117,7 +121,7 @@ def test_login_and_print_kiwer(capsys):
     captured = capsys.readouterr()
     assert captured.out == "test_id login success\n"
 
-@pytest.mark.skip
+
 def test_buy_and_print_nemo(capsys):
     trader_app = AutoTradingSystem()
 
@@ -127,7 +131,6 @@ def test_buy_and_print_nemo(capsys):
     captured = capsys.readouterr()
     assert captured.out == "[NEMO]1234 buy stock(price: 50 ) *(count : 5)\n"
 
-@pytest.mark.skip
 def test_buy_and_print_kiwer(capsys):
     trader_app = AutoTradingSystem()
 

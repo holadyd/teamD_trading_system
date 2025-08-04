@@ -7,7 +7,8 @@ class AutoTradingSystem:
     def login(self, id, password):
         self.driver.login(id, password)
 
-    def select_stock_broker(self, broker:Driver): ...
+    def select_stock_broker(self, broker):
+        self.driver: Driver = Driver(broker)
 
     def buy_nice_timing(self):
         '''
@@ -17,6 +18,9 @@ class AutoTradingSystem:
             :return:
         '''
         pass
+
+    def buy(self,code,price,count):
+        self.driver.buy(code,count,price)
 
     def sell_nice_timing(self):
         '''

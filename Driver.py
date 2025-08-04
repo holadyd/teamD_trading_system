@@ -17,7 +17,14 @@ class Driver:
             raise Exception("Broker Name is not valid")
 
     def buy(self, stock_code, count, price):
-        pass
+        if self._driver == None:
+            raise Exception()
+        if self._broker == "nemo":
+            self._driver.purchasing_stock(stock_code,price,count)
+        elif self._broker == "kiwer":
+            self._driver.buy(stock_code,count,price)
+        else:
+            raise Exception("Broker Name is not valid")
 
     def sell(self, stock_code, count, price):
         pass
