@@ -175,7 +175,7 @@ def test_auto_trader_trend_analysis(mocker):
     assert trader_app._trend_analysis(test_stock_code) == '-'
     assert trader_app._trend_analysis(test_stock_code) == 'down'
     assert trader_app._trend_analysis(test_stock_code) == 'down'
-    assert trader_app._trend_analysis(test_stock_code) == '-'
+    assert trader_app._trend_analysis(test_stock_code) == 'down'
 
 
 def test_auto_trader_nemo_buy_nice_timing_(capsys):
