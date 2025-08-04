@@ -25,7 +25,7 @@ def test_auto_trader_import():
 
 def test_auto_trader_select_broker(mocker: MockerFixture):
     trader_app = AutoTradingSystem()
-    trader_app.select_broker(TestBroker)
+    trader_app.select_stock_broker(TestBroker)
     driver = trader_app.driver
 
     assert driver._broker is not None
