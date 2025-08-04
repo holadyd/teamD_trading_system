@@ -11,7 +11,6 @@ def test_auto_trader_import():
     assert trader_app is not None
 
 
-
 def test_auto_trader_login(mocker: MockerFixture):
     driver = mocker.Mock(spec=Driver)
     trader_app = AutoTradingSystem()
@@ -51,6 +50,7 @@ def test_auto_trader_get_price(mocker: MockerFixture):
 
     driver.get_price.assert_has_calls([call('stock code')])
 
+
 def test_login_and_print_nemo(capsys):
     trader_app = AutoTradingSystem()
 
@@ -59,6 +59,7 @@ def test_login_and_print_nemo(capsys):
 
     captured = capsys.readouterr()
     assert captured.out == "[NEMO]test_id login GOOD\n"
+
 
 def test_login_and_print_kiwer(capsys):
     trader_app = AutoTradingSystem()
@@ -69,6 +70,7 @@ def test_login_and_print_kiwer(capsys):
     captured = capsys.readouterr()
     assert captured.out == "test_id login success\n"
 
+
 def test_buy_and_print_nemo(capsys):
     trader_app = AutoTradingSystem()
 
@@ -77,6 +79,7 @@ def test_buy_and_print_nemo(capsys):
 
     captured = capsys.readouterr()
     assert captured.out == "[NEMO]1234 buy stock(price: 50 ) *(count : 5)\n"
+
 
 def test_buy_and_print_kiwer(capsys):
     trader_app = AutoTradingSystem()
@@ -87,6 +90,7 @@ def test_buy_and_print_kiwer(capsys):
     captured = capsys.readouterr()
     assert captured.out == "5678 : Buy stock ( 99 * 10\n"
 
+
 def test_sell_and_print_nemo(capsys):
     trader_app = AutoTradingSystem()
 
@@ -95,6 +99,7 @@ def test_sell_and_print_nemo(capsys):
 
     captured = capsys.readouterr()
     assert captured.out == "[NEMO]1234 sell stock ( price : 50 ) * ( count : 5)\n"
+
 
 def test_sell_and_print_kiwer(capsys):
     trader_app = AutoTradingSystem()
@@ -105,13 +110,14 @@ def test_sell_and_print_kiwer(capsys):
     captured = capsys.readouterr()
     assert captured.out == "5678 : Sell stock ( 99 * 10\n"
 
+
 def test_auto_trader_trend_analysis(mocker):
     trader_app = AutoTradingSystem()
     trader_app._driver = mocker.Mock()
     trader_app._driver.get_price.side_effect = [
         150, 100, 200,
-        89,90,91,
-        100, 0, 101,
+        89, 90, 91,
+        100, 100, 101,
         102, 101, 100,
         180, 150, 100,
         200, 103, 102
@@ -139,3 +145,57 @@ def test_buy_nice_timing_kiwer_fail(mocker, capsys):
 
     assert captured.out == ""
 
+
+def test_buy_nice_timing_nemo_fail(mocker, capsys):
+    trader_app = AutoTradingSystem()
+
+    driver = mocker.Mock(spec=Driver)
+    trader_app._driver = driver
+    trader_app.select_stock_broker("nemo")
+    driver.get_price.side_effect = [150, 100, 200]
+
+    trader_app.buy_nice_timing('1234', 1000)
+    captured = capsys.readouterr()
+
+    assert captured.out == ""
+
+
+def test_buy_nice_timing_kiwer_success1(mocker, capsys):
+    trader_app = AutoTradingSystem()
+
+    driver = mocker.Mock(spec=Driver)
+    trader_app._driver = driver
+    trader_app.select_stock_broker("kiwer")
+    driver.get_price.side_effect = [100, 180, 200]
+
+    trader_app.buy_nice_timing('1234', 1000)
+    captured = capsys.readouterr()
+
+    assert captured.out == "1234 : Buy stock ( 200 * 5\n"
+
+def test_buy_nice_timing_kiwer_success2(mocker, capsys):
+    trader_app = AutoTradingSystem()
+
+    driver = mocker.Mock(spec=Driver)
+    trader_app._driver = driver
+    trader_app.select_stock_broker("kiwer")
+    driver.get_price.side_effect = [55, 65, 70]
+
+    trader_app.buy_nice_timing('5678', 1000)
+    captured = capsys.readouterr()
+
+    assert captured.out == "5678 : Buy stock ( 70 * 14\n"
+
+
+def test_buy_nice_timing_nemo_success(mocker, capsys):
+    trader_app = AutoTradingSystem()
+
+    driver = mocker.Mock(spec=Driver)
+    trader_app._driver = driver
+    trader_app.select_stock_broker("nemo")
+    driver.get_price.side_effect = [100, 200, 300]
+
+    trader_app.buy_nice_timing('1234', 1000)
+    captured = capsys.readouterr()
+
+    assert captured.out == "[NEMO]1234 buy stock(price: 300 ) *(count : 3)\n"
