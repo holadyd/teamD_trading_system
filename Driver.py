@@ -1,6 +1,6 @@
 class Driver():
-    def __init__(self, brocker):
-        self._broker = brocker
+    def __init__(self, broker):
+        self._broker = broker
 
     def login(self, id, password):
         pass
