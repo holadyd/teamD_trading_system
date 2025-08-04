@@ -6,7 +6,7 @@ class AutoTradingSystem:
         self._driver = None
 
     def select_stock_broker(self, broker_name):
-        self._driver = Driver(broker=broker_name)
+        self._driver = Driver(broker_name)
 
     def buy_nice_timing(self):
         '''
