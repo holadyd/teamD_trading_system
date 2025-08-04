@@ -2,6 +2,7 @@ import pytest
 from pytest_mock import MockerFixture
 from abc import ABC, abstractmethod
 from unittest.mock import call
+from AutoTradingSystem import *
 
 
 class TestBroker():
@@ -17,29 +18,24 @@ class TestBroker():
     def get_price(self):
         ...
 
-@pytest.mark.skip
 def test_auto_trader_import():
     trader_app = AutoTradingSystem()
     assert trader_app is not None
 
-
 @pytest.mark.skip
 def test_auto_trader_select_broker(mocker: MockerFixture):
     trader_app = AutoTradingSystem()
-    trader_app.select_broker(TestBroker)
+    trader_app.select_stock_broker()
     driver = trader_app.driver
 
     assert driver._broker is not None
     assert isinstance(driver._broker, TestBroker)
 
-@pytest.mark.skip
 def test_auto_trader_login(mocker: MockerFixture):
     driver = mocker.Mock(spec=Driver)
     trader_app = AutoTradingSystem()
     trader_app.driver = driver
-
     trader_app.login('testid', 'testpw')
-
     driver.login.assert_has_calls([call('testid', 'testpw')])
 
 @pytest.mark.skip
@@ -85,16 +81,6 @@ def test_auto_trader_get_price(mocker: MockerFixture):
     trader_app.get_price('stock code')
 
     driver.get_price.assert_has_calls([call('stock code')])
-
-
-@pytest.mark.skip
-def test_auto_trader_buy_nice_timing(moker):
-    driver = mocker.Mock(spec=Driver)
-    trader_app = AutoTradingSystem()
-    trader_app.driver = driver
-    driver.get_price.side_effect = [150, 100, 200]
-
-    trader_app.buy_nice_timing('1234', 1000)
 
 
 @pytest.mark.skip
@@ -170,3 +156,36 @@ def test_sell_and_print_kiwer(capsys):
 
     captured = capsys.readouterr()
     assert captured.out == "5678 : Sell stock ( 99 * 10\n"
+
+@pytest.mark.skip
+def test_auto_trader_trend_analysis(mocker):
+    trader_app = AutoTradingSystem()
+    trader_app.driver = mocker.Mock()
+    driver.get_price.side_effect = [
+        150, 100, 200,
+        89,90,91,
+        100, 0, 101,
+        102, 101, 100,
+        180, 150, 100,
+        200, 103, 102
+    ]
+    test_stock_code = '1234'
+
+    assert trader_app._trend_analysis(test_stock_code) == '-'
+    assert trader_app._trend_analysis(test_stock_code) == 'up'
+    assert trader_app._trend_analysis(test_stock_code) == '-'
+    assert trader_app._trend_analysis(test_stock_code) == 'down'
+    assert trader_app._trend_analysis(test_stock_code) == 'down'
+    assert trader_app._trend_analysis(test_stock_code) == 'down'
+
+@pytest.mark.skip
+def test_auto_trader_nemo_buy_nice_timing_(capsys):
+    trader_app = AutoTradingSystem()
+    trader_app.select_stock_broker("kiwer")
+    driver = trader_app.driver
+    driver.get_price.side_effect = [150, 100, 200]
+
+    trader_app.buy_nice_timing('1234', 1000)
+    captured = capsys.readouterr()
+
+    assert captured.out == "5678 : Buy stock ( 99 * 10\n"

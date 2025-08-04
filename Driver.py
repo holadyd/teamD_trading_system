@@ -1,9 +1,20 @@
-class Driver():
-    def __init__(self, brocker):
+from nemo_api import *
+from kiwer_api import *
+
+class Driver:
+    def __init__(self, brocker:str):
         self._broker = brocker
+        self._driver = None
 
     def login(self, id, password):
-        pass
+        if self._broker == "nemo":
+            self._driver = NemoAPI()
+            self._driver.cerification(id, password)
+        elif self._broker== "kiwer":
+            self._driver = KiwerAPI()
+            self._driver.login(id, password)
+        else:
+            raise Exception("Broker Name is not valid")
 
     def buy(self, stock_code, count, price):
         pass
