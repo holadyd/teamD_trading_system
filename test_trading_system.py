@@ -92,7 +92,8 @@ def test_auto_trader_get_price(mocker: MockerFixture):
 
     trader_app.get_price('stock code')
 
-    driver.buy.assert_has_calls([call('stock code')])
+    driver.get_price.assert_has_calls([call('stock code')])
+
 
 @pytest.mark.skip
 def test_auto_trader_sell_stock(mocker: MockerFixture):
