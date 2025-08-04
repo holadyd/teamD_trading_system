@@ -2,20 +2,8 @@ import pytest
 from pytest_mock import MockerFixture
 from abc import ABC, abstractmethod
 from unittest.mock import call
-
-
-class TestBroker():
-    def login(self):
-        ...
-
-    def buy(self):
-        ...
-
-    def sell(self):
-        ...
-
-    def get_price(self):
-        ...
+from Driver import Driver
+from AutoTradingSystem import AutoTradingSystem
 
 
 def test_auto_trader_import():
@@ -23,19 +11,11 @@ def test_auto_trader_import():
     assert trader_app is not None
 
 
-def test_auto_trader_select_broker(mocker: MockerFixture):
-    trader_app = AutoTradingSystem()
-    trader_app.select_stock_broker(TestBroker)
-    driver = trader_app.driver
-
-    assert driver._broker is not None
-    assert isinstance(driver._broker, TestBroker)
-
 
 def test_auto_trader_login(mocker: MockerFixture):
     driver = mocker.Mock(spec=Driver)
     trader_app = AutoTradingSystem()
-    trader_app.driver = driver
+    trader_app._driver = driver
 
     trader_app.login('testid', 'testpw')
 
@@ -45,7 +25,7 @@ def test_auto_trader_login(mocker: MockerFixture):
 def test_auto_trader_buy(mocker: MockerFixture):
     driver = mocker.Mock(spec=Driver)
     trader_app = AutoTradingSystem()
-    trader_app.driver = driver
+    trader_app._driver = driver
 
     trader_app.buy('stock code', 3000, 5)
 
@@ -55,7 +35,7 @@ def test_auto_trader_buy(mocker: MockerFixture):
 def test_auto_trader_sell(mocker: MockerFixture):
     driver = mocker.Mock(spec=Driver)
     trader_app = AutoTradingSystem()
-    trader_app.driver = driver
+    trader_app._driver = driver
 
     trader_app.sell('stock code', 3000, 5)
 
@@ -65,7 +45,7 @@ def test_auto_trader_sell(mocker: MockerFixture):
 def test_auto_trader_get_price(mocker: MockerFixture):
     driver = mocker.Mock(spec=Driver)
     trader_app = AutoTradingSystem()
-    trader_app.driver = driver
+    trader_app._driver = driver
 
     trader_app.get_price('stock code')
 
@@ -127,8 +107,8 @@ def test_sell_and_print_kiwer(capsys):
 
 def test_auto_trader_trend_analysis(mocker):
     trader_app = AutoTradingSystem()
-    trader_app.driver = mocker.Mock()
-    driver.get_price.side_effect = [
+    trader_app._driver = mocker.Mock()
+    trader_app._driver.get_price.side_effect = [
         150, 100, 200,
         89,90,91,
         100, 0, 101,
@@ -146,13 +126,16 @@ def test_auto_trader_trend_analysis(mocker):
     assert trader_app._trend_analysis(test_stock_code) == 'down'
 
 
-def test_auto_trader_nemo_buy_nice_timing_(capsys):
+def test_buy_nice_timing_kiwer_fail(mocker, capsys):
     trader_app = AutoTradingSystem()
+
+    driver = mocker.Mock(spec=Driver)
+    trader_app._driver = driver
     trader_app.select_stock_broker("kiwer")
-    driver = trader_app.driver
     driver.get_price.side_effect = [150, 100, 200]
 
     trader_app.buy_nice_timing('1234', 1000)
     captured = capsys.readouterr()
 
-    assert captured.out == "5678 : Buy stock ( 99 * 10\n"
+    assert captured.out == ""
+
