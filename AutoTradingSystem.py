@@ -1,4 +1,13 @@
+from Driver import Driver
+
+
 class AutoTradingSystem:
+    def __init__(self):
+        self._driver = None
+
+    def select_stock_broker(self, broker_name):
+        self._driver = Driver(broker=broker_name)
+
     def buy_nice_timing(self):
         '''
             • 200ms 주기로 3회 가격을 읽고, 가격이 올라가는 추세인지 파악한다.
@@ -17,3 +26,16 @@ class AutoTradingSystem:
         '''
         pass
 
+    def _trend_analysis(self, stock_code):
+        if self._driver is None:
+            raise Exception()
+
+        ret1 = self._driver.get_price(stock_code)
+        ret2 = self._driver.get_price(stock_code)
+        ret3 = self._driver.get_price(stock_code)
+
+        if ret1 < ret2 < ret3:
+            return "up"
+        elif ret1 > ret2 > ret3:
+            return "down"
+        return "-"
