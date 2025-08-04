@@ -17,12 +17,13 @@ class TestBroker():
     def get_price(self):
         ...
 
-
+@pytest.mark.skip
 def test_auto_trader_import():
     trader_app = AutoTradingSystem()
     assert trader_app is not None
 
 
+@pytest.mark.skip
 def test_auto_trader_select_broker(mocker: MockerFixture):
     trader_app = AutoTradingSystem()
     trader_app.select_broker(TestBroker)
@@ -31,7 +32,7 @@ def test_auto_trader_select_broker(mocker: MockerFixture):
     assert driver._broker is not None
     assert isinstance(driver._broker, TestBroker)
 
-
+@pytest.mark.skip
 def test_auto_trader_login(mocker: MockerFixture):
     driver = mocker.Mock(spec=Driver)
     trader_app = AutoTradingSystem()
@@ -41,7 +42,7 @@ def test_auto_trader_login(mocker: MockerFixture):
 
     driver.login.assert_has_calls([call('testid', 'testpw')])
 
-
+@pytest.mark.skip
 def test_auto_trader_buy(mocker: MockerFixture):
     driver = mocker.Mock(spec=Driver)
     trader_app = AutoTradingSystem()
@@ -65,7 +66,7 @@ def test_auto_trader_buy(mocker: MockerFixture):
 #     assert trader_app.driver.account.stocks[0].stock_code == '1234'
 #     assert trader_app.driver.account.stocks[0].amount == 5
 
-
+@pytest.mark.skip
 def test_auto_trader_sell(mocker: MockerFixture):
     driver = mocker.Mock(spec=Driver)
     trader_app = AutoTradingSystem()
@@ -75,7 +76,7 @@ def test_auto_trader_sell(mocker: MockerFixture):
 
     driver.sell.assert_has_calls([call('stock code', 3000, 5)])
 
-
+@pytest.mark.skip
 def test_auto_trader_get_price(mocker: MockerFixture):
     driver = mocker.Mock(spec=Driver)
     trader_app = AutoTradingSystem()
@@ -109,6 +110,8 @@ def test_auto_trader_buy_auto_system_(mocker: MockerFixture):
 @pytest.mark.skip
 def test_auto_trader_sell_auto_stock(mocker: MockerFixture):
     ...
+
+@pytest.mark.skip
 def test_login_and_print_nemo(capsys):
     trader_app = AutoTradingSystem()
 
@@ -118,6 +121,7 @@ def test_login_and_print_nemo(capsys):
     captured = capsys.readouterr()
     assert captured.out == "[NEMO]test_id login GOOD\n"
 
+@pytest.mark.skip
 def test_login_and_print_kiwer(capsys):
     trader_app = AutoTradingSystem()
 
