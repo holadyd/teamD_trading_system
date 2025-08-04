@@ -8,13 +8,11 @@ class Driver:
 
     def login(self, id, password):
         if self._broker == "nemo":
-            self._driver = NemoAPI()
             self._driver.cerification(id, password)
         elif self._broker== "kiwer":
-            self._driver = KiwerAPI()
             self._driver.login(id, password)
         else:
-            raise Exception("Broker Name is not valid")
+            pass
 
     def buy(self, stock_code, count, price):
         if self._driver == None:

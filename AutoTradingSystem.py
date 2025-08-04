@@ -7,8 +7,13 @@ class AutoTradingSystem:
     def login(self, id, password):
         self.driver.login(id, password)
 
-    def select_stock_broker(self, broker):
-        self.driver: Driver = Driver(broker)
+    def select_stock_broker(self, broker:str):
+        if broker == "nemo":
+            self._driver = NemoAPI()
+        elif broker == "kiwer":
+            self._driver = KiwerAPI()
+        else:
+            raise Exception("Broker Name is Not Valid!")
 
     def buy_nice_timing(self):
         '''

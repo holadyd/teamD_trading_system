@@ -26,19 +26,20 @@ def test_auto_trader_import():
     trader_app = AutoTradingSystem()
     assert trader_app is not None
 
-@pytest.mark.skip
+
 def test_auto_trader_select_broker(mocker: MockerFixture):
     trader_app = AutoTradingSystem()
-    trader_app.select_stock_broker()
-    driver = trader_app.driver
+    trader_app.select_stock_broker("nemo")
+    driver = trader_app._driver
 
-    assert driver._broker is not None
-    assert isinstance(driver._broker, TestBroker)
+    assert driver is not None
+    #assert isinstance(driver, TestBroker)
 
 def test_auto_trader_login(mocker: MockerFixture):
     driver = mocker.Mock(spec=Driver)
     trader_app = AutoTradingSystem()
-    trader_app.driver = driver
+    trader_app.select_stock_broker("nemo")
+    trader_app._driver = driver
     trader_app.login('testid', 'testpw')
     driver.login.assert_has_calls([call('testid', 'testpw')])
 
