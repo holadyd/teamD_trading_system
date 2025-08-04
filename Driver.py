@@ -2,8 +2,13 @@ from nemo_api import *
 from kiwer_api import *
 
 class Driver:
-    def __init__(self, brocker:str):
-        self._broker = brocker
+    def __init__(self, broker:str):
+        self._broker = broker
+        if self._broker == "nemo":
+            self._driver = NemoAPI()
+        elif self._broker == "kiwer":
+            self._driver = KiwerAPI()
+
         self._driver = None
 
     def login(self, id, password):
