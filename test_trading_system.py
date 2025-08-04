@@ -218,6 +218,7 @@ def test_sell_nice_timing_kiwer_success(mocker: MockerFixture, capsys):
     trader_app.sell_nice_timing('5678', 5)
     captured = capsys.readouterr()
 
+    driver.buy.assert_has_calls([call('5678', 100, 5)])
     assert captured.out == "5678 : Sell stock ( 100 * 5\n"
 
 def test_sell_nice_timing_kiwer_fail(mocker: MockerFixture, capsys):
@@ -231,6 +232,7 @@ def test_sell_nice_timing_kiwer_fail(mocker: MockerFixture, capsys):
     trader_app.sell_nice_timing('5678', 5)
     captured = capsys.readouterr()
 
+    assert driver.sell.call_count == 0
     assert captured.out == ""
 
 def test_sell_nice_timing_nemo_success(mocker: MockerFixture, capsys):
@@ -244,6 +246,7 @@ def test_sell_nice_timing_nemo_success(mocker: MockerFixture, capsys):
     trader_app.sell_nice_timing('1234', 5)
     captured = capsys.readouterr()
 
+    driver.buy.assert_has_calls([call('1234', 100, 5)])
     assert captured.out == "[NEMO]1234 sell stock ( price : 100 ) * ( count : 5)\n\n"
 
 def test_sell_nice_timing_nemo_fail(mocker: MockerFixture, capsys):
@@ -257,5 +260,6 @@ def test_sell_nice_timing_nemo_fail(mocker: MockerFixture, capsys):
     trader_app.sell_nice_timing('1234', 5)
     captured = capsys.readouterr()
 
+    assert driver.sell.call_count == 0
     assert captured.out == ""
 
