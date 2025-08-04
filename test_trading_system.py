@@ -93,3 +93,41 @@ def test_auto_trader_buy_auto_system_(mocker: MockerFixture):
 def test_auto_trader_sell_auto_stock(mocker: MockerFixture):
     ...
 
+def test_login_and_print_nemo(capsys):
+    ...
+
+def test_login_and_print_kiwer(capsys):
+    ...
+
+@pytest.mark.skip
+def test_buy_and_print_nemo(capsys):
+    trader_app = AutoTradingSystem()
+
+    trader_app.select_stock_broker("nemo")
+    trader_app.buy('1234', 50, 5)
+
+    captured = capsys.readouterr()
+    assert captured.out == "[NEMO]1234 buy stock(price: 50 ) *(count : 5)\n"
+
+@pytest.mark.skip
+def test_buy_and_print_kiwer(capsys):
+    trader_app = AutoTradingSystem()
+
+    trader_app.select_stock_broker("kiwer")
+    trader_app.buy('5678', 99, 10)
+
+    captured = capsys.readouterr()
+    assert captured.out == "5678 : Buy stock ( 99 * 10\n"
+
+def test_sell_and_print_nemo(capsys):
+    ...
+
+
+def test_sell_and_print_kiwer(capsys):
+    ...
+
+def test_capsys(capsys):
+    print("hello")
+    captured = capsys.readouterr()
+    assert captured.out == "hello\n"
+
