@@ -65,7 +65,7 @@ def test_login_and_print_kiwer(capsys):
     trader_app = AutoTradingSystem()
 
     trader_app.select_stock_broker("kiwer")
-    trader_app.buy('test_id', 'test_pw')
+    trader_app.login('test_id', 'test_pw')
 
     captured = capsys.readouterr()
     assert captured.out == "test_id login success\n"
@@ -78,7 +78,8 @@ def test_buy_and_print_nemo(capsys):
     trader_app.buy('1234', 50, 5)
 
     captured = capsys.readouterr()
-    assert captured.out == "[NEMO]1234 buy stock(price: 50 ) *(count : 5)\n"
+    assert captured.out == "[NEMO]1234 buy stock ( price : 50 ) * ( count : 5)\n"
+
 
 
 def test_buy_and_print_kiwer(capsys):
@@ -229,6 +230,7 @@ def test_sell_nice_timing_kiwer_fail(mocker: MockerFixture, capsys):
     trader_app.select_stock_broker("kiwer")
     driver.get_price.side_effect = [100, 150, 200]
 
+
     trader_app.sell_nice_timing('5678', 5)
     captured = capsys.readouterr()
 
@@ -262,4 +264,3 @@ def test_sell_nice_timing_nemo_fail(mocker: MockerFixture, capsys):
 
     assert driver.sell.call_count == 0
     assert captured.out == ""
-
