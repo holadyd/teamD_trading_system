@@ -130,7 +130,7 @@ def test_buy_and_print_nemo(capsys):
     trader_app.buy('1234', 50, 5)
 
     captured = capsys.readouterr()
-    assert captured.out == "[NEMO]1234 buy stock(price: 50 ) *(count : 5)\n"
+    assert captured.out == "[NEMO]1234 buy stock ( price : 50 ) * ( count : 5)\n"
 
 def test_buy_and_print_kiwer(capsys):
     trader_app = AutoTradingSystem()

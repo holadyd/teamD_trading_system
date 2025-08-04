@@ -5,7 +5,7 @@ class AutoTradingSystem:
         self.driver = None
 
     def login(self, id, password):
-        self.driver.login(id, password)
+        self._driver.login(id, password)
 
     def select_stock_broker(self, broker:str):
         self._driver = Driver(broker)

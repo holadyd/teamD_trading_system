@@ -9,7 +9,7 @@ class Driver:
         elif self._broker == "kiwer":
             self._driver = KiwerAPI()
 
-        self._driver = None
+        #self._driver = None
 
     def login(self, id, password):
         if self._broker == "nemo":
