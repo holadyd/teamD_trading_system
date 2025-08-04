@@ -1,12 +1,17 @@
-from Driver import *
+
+
+from Driver import Driver
+
 
 
 class AutoTradingSystem:
     def __init__(self):
         self._driver = None
 
+
     def select_stock_broker(self, broker: str):
         self._driver = Driver(broker)
+
 
     def buy_nice_timing(self):
         '''
@@ -26,6 +31,7 @@ class AutoTradingSystem:
         '''
         pass
 
+
     def buy(self, stock_code, price, count):
 
         self._driver.buy(stock_code, price, count)
@@ -39,6 +45,7 @@ class AutoTradingSystem:
     def login(self, id, pw):
         self._driver.login(id, pw)
 
+
     def _trend_analysis(self, stock_code):
         if self._driver is None:
             raise Exception()
@@ -51,4 +58,6 @@ class AutoTradingSystem:
             return "up"
         elif ret1 > ret2 > ret3:
             return "down"
+
         return "-"
+
