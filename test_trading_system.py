@@ -143,6 +143,7 @@ def test_buy_nice_timing_kiwer_fail(mocker, capsys):
     trader_app.buy_nice_timing('1234', 1000)
     captured = capsys.readouterr()
 
+    assert driver.buy.call_count == 0
     assert captured.out == ""
 
 
@@ -157,6 +158,7 @@ def test_buy_nice_timing_nemo_fail(mocker, capsys):
     trader_app.buy_nice_timing('1234', 1000)
     captured = capsys.readouterr()
 
+    assert driver.buy.call_count == 0
     assert captured.out == ""
 
 
@@ -171,7 +173,9 @@ def test_buy_nice_timing_kiwer_success1(mocker, capsys):
     trader_app.buy_nice_timing('1234', 1000)
     captured = capsys.readouterr()
 
+    driver.buy.assert_has_calls([call('1234', 200, 5)])
     assert captured.out == "1234 : Buy stock ( 200 * 5\n"
+
 
 def test_buy_nice_timing_kiwer_success2(mocker, capsys):
     trader_app = AutoTradingSystem()
@@ -184,6 +188,7 @@ def test_buy_nice_timing_kiwer_success2(mocker, capsys):
     trader_app.buy_nice_timing('5678', 1000)
     captured = capsys.readouterr()
 
+    driver.buy.assert_has_calls([call('5678', 70, 14)])
     assert captured.out == "5678 : Buy stock ( 70 * 14\n"
 
 
@@ -198,4 +203,5 @@ def test_buy_nice_timing_nemo_success(mocker, capsys):
     trader_app.buy_nice_timing('1234', 1000)
     captured = capsys.readouterr()
 
+    driver.buy.assert_has_calls([call('1234', 300, 3)])
     assert captured.out == "[NEMO]1234 buy stock(price: 300 ) *(count : 3)\n"
