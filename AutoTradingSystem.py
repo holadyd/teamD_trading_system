@@ -1,19 +1,12 @@
 from Driver import *
 
+
 class AutoTradingSystem:
     def __init__(self):
         self._driver = None
 
-    def login(self, id, password):
-        self._driver.login(id, password)
-
-    def select_stock_broker(self, broker:str):
-        if broker == "nemo":
-            self._driver = NemoAPI()
-        elif broker == "kiwer":
-            self._driver = KiwerAPI()
-        else:
-            raise Exception("Broker Name is Not Valid!")
+    def select_stock_broker(self, broker: str):
+        self._driver = Driver(broker)
 
     def buy_nice_timing(self):
         '''
@@ -33,3 +26,29 @@ class AutoTradingSystem:
         '''
         pass
 
+    def buy(self, stock_code, price, count):
+
+        self._driver.buy(stock_code, price, count)
+
+    def sell(self, stock_code, price, count):
+        self._driver.sell(stock_code, price, count)
+
+    def get_price(self, stock_code):
+        self._driver.get_price(stock_code)
+
+    def login(self, id, pw):
+        self._driver.login(id, pw)
+
+    def _trend_analysis(self, stock_code):
+        if self._driver is None:
+            raise Exception()
+
+        ret1 = self._driver.get_price(stock_code)
+        ret2 = self._driver.get_price(stock_code)
+        ret3 = self._driver.get_price(stock_code)
+
+        if ret1 < ret2 < ret3:
+            return "up"
+        elif ret1 > ret2 > ret3:
+            return "down"
+        return "-"
