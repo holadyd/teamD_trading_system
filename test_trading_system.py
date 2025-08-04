@@ -227,7 +227,7 @@ def test_sell_nice_timing_kiwer_fail(mocker: MockerFixture, capsys):
     driver = mocker.Mock(spec=Driver)
     trader_app._driver = driver
     trader_app.select_stock_broker("kiwer")
-    driver.get_price.side_effect = [200, 150, 100]
+    driver.get_price.side_effect = [100, 150, 200]
 
     trader_app.sell_nice_timing('5678', 5)
     captured = capsys.readouterr()
@@ -255,7 +255,7 @@ def test_sell_nice_timing_nemo_fail(mocker: MockerFixture, capsys):
     driver = mocker.Mock(spec=Driver)
     trader_app._driver = driver
     trader_app.select_stock_broker("nemo")
-    driver.get_price.side_effect = [200, 150, 100]
+    driver.get_price.side_effect = [100, 150, 200]
 
     trader_app.sell_nice_timing('1234', 5)
     captured = capsys.readouterr()
