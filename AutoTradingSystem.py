@@ -28,3 +28,6 @@ class AutoTradingSystem:
         '''
         pass
 
+    def get_price(self, stock_code:str):
+        return self._driver.get_price(stock_code)
+

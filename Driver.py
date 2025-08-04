@@ -9,8 +9,6 @@ class Driver:
         elif self._broker == "kiwer":
             self._driver = KiwerAPI()
 
-        self._driver = None
-
     def login(self, id, password):
         if self._broker == "nemo":
             self._driver.cerification(id, password)
@@ -25,5 +23,10 @@ class Driver:
     def sell(self, stock_code, count, price):
         pass
 
-    def get_price(self, stock_code, minute=0):
-        pass
+    def get_price(self, stock_code):
+        if self._broker == "nemo":
+            return self._driver.get_market_price(stock_code, 0)
+        elif self._broker == "kiwer":
+            return self._driver.current_price(stock_code)
+        else:
+            return None
