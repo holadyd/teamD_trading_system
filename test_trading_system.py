@@ -2,6 +2,7 @@ import pytest
 from pytest_mock import MockerFixture
 from abc import ABC, abstractmethod
 from unittest.mock import call
+from AutoTradingSystem import *
 
 
 class TestBroker():
@@ -17,29 +18,24 @@ class TestBroker():
     def get_price(self):
         ...
 
-@pytest.mark.skip
 def test_auto_trader_import():
     trader_app = AutoTradingSystem()
     assert trader_app is not None
 
-
 @pytest.mark.skip
 def test_auto_trader_select_broker(mocker: MockerFixture):
     trader_app = AutoTradingSystem()
-    trader_app.select_stock_broker(TestBroker)
+    trader_app.select_stock_broker()
     driver = trader_app.driver
 
     assert driver._broker is not None
     assert isinstance(driver._broker, TestBroker)
 
-@pytest.mark.skip
 def test_auto_trader_login(mocker: MockerFixture):
     driver = mocker.Mock(spec=Driver)
     trader_app = AutoTradingSystem()
     trader_app.driver = driver
-
     trader_app.login('testid', 'testpw')
-
     driver.login.assert_has_calls([call('testid', 'testpw')])
 
 @pytest.mark.skip

@@ -1,9 +1,14 @@
-class Driver():
+class Driver:
     def __init__(self, brocker):
         self._broker = brocker
 
     def login(self, id, password):
-        pass
+        if self._broker.name == "nemo":
+            self._broker.cerification(id, password)
+        elif self._broker.name == "kiwer":
+            self._broker.login(id, password)
+        else:
+            raise Exception("Broker Name is not valid")
 
     def buy(self, stock_code, count, price):
         pass

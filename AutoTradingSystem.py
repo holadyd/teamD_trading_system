@@ -1,4 +1,14 @@
+from Driver import *
+
 class AutoTradingSystem:
+    def __init__(self):
+        self.driver = None
+
+    def login(self, id, password):
+        self.driver.login(id, password)
+
+    def select_stock_broker(self, broker:Driver): ...
+
     def buy_nice_timing(self):
         '''
             • 200ms 주기로 3회 가격을 읽고, 가격이 올라가는 추세인지 파악한다.
