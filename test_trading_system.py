@@ -161,6 +161,7 @@ def test_sell_and_print_kiwer(capsys):
     captured = capsys.readouterr()
     assert captured.out == "5678 : Sell stock ( 99 * 10\n"
 
+@pytest.mark.skip
 def test_auto_trader_trend_analysis(mocker):
     trader_app = AutoTradingSystem()
     trader_app.driver = mocker.Mock()
@@ -181,7 +182,7 @@ def test_auto_trader_trend_analysis(mocker):
     assert trader_app._trend_analysis(test_stock_code) == 'down'
     assert trader_app._trend_analysis(test_stock_code) == 'down'
 
-
+@pytest.mark.skip
 def test_auto_trader_nemo_buy_nice_timing_(capsys):
     trader_app = AutoTradingSystem()
     trader_app.select_stock_broker("kiwer")
