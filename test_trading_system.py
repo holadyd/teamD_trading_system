@@ -28,7 +28,7 @@ def test_auto_trader_select_broker(mocker):
 @pytest.mark.skip
 def test_auto_trader_sell_stock():
     ...
-
+d
 
 @pytest.mark.skip
 def test_auto_trader_sell_stock():
